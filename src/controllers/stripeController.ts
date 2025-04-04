@@ -40,8 +40,8 @@ export const createStripeHosted = async (req: Request, res: Response) => {
                 quantity: item.quantity,
             })),
             mode: "payment",
-            success_url: "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url: "http://localhost:5173/cart",
+            success_url: "https://happy-shop-client.vercel.app/success?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url: "https://happy-shop-client.vercel.app/cart",
         });
         res.json({ 
             checkout_url: session.url,
