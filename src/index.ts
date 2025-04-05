@@ -10,12 +10,12 @@ const app = express();
 
 // Middleware
 app.use(express.json())
-app.options("*", cors());
 app.use(cookieParser());
 app.use(cors({
   origin: ["http://localhost:5173", "https://happy-shop-client.vercel.app"],
   credentials: true
 }));
+app.options("*", cors());
 
 
 // Routes
