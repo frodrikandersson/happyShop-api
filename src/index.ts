@@ -1,23 +1,21 @@
 import express from "express";
 import {connectDB} from "./config/db";
-import cors from "cors";
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
 import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
 
-app.use(cors({
-  origin: "https://happy-shop-client.vercel.app/",
-  credentials: true
-}));
-
-
-app.use(express.json());
-
 // Middleware
-import cookieParser from 'cookie-parser';
+app.use(express.json())
 app.use(cookieParser());
+app.use(cors({
+  // origin: "http://localhost:5173",
+  origin: "https://happy-shop-client.vercel.app/",
+  credentials: true,  // ✅ Allows cookies
+}));
 
 
 // Routes
@@ -42,6 +40,6 @@ app.listen(PORT, () => {
   console.log(`The server is running at http://localhost:${PORT}`);
 })
 
-// export default (req: VercelRequest, res: VercelResponse) => {
-//   return app(req, res);
-// };
+export default (req: VercelRequest, res: VercelResponse) => {
+  return app(req, res);
+};
