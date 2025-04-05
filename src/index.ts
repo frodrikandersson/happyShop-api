@@ -12,8 +12,9 @@ const app = express();
 app.use(express.json())
 app.use(cookieParser());
 app.use(cors({
-  origin: "https://happy-shop-client.vercel.app",
-  credentials: true,  
+  origin: "http://localhost:5173",
+  // origin: "https://happy-shop-client.vercel.app",
+  credentials: true,  // ✅ Allows cookies
 }));
 
 
