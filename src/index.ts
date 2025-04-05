@@ -1,6 +1,5 @@
 import express from "express";
 import {connectDB} from "./config/db";
-import cookieParser from 'cookie-parser';
 import cors from "cors";
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
@@ -13,10 +12,12 @@ app.use(cors({
   credentials: true
 }));
 
-// Middleware
-app.use(cookieParser());
+
 app.use(express.json());
-app.options("*", cors());
+
+// Middleware
+import cookieParser from 'cookie-parser';
+app.use(cookieParser());
 
 
 // Routes
@@ -41,6 +42,6 @@ app.listen(PORT, () => {
   console.log(`The server is running at http://localhost:${PORT}`);
 })
 
-export default (req: VercelRequest, res: VercelResponse) => {
-  return app(req, res);
-};
+// export default (req: VercelRequest, res: VercelResponse) => {
+//   return app(req, res);
+// };
