@@ -8,13 +8,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
 
-// Middleware
-app.use(express.json())
-app.use(cookieParser());
 app.use(cors({
   origin: ["http://localhost:5173", "https://happy-shop-client.vercel.app"],
   credentials: true
 }));
+
+// Middleware
+app.use(cookieParser());
+app.use(express.json());
 app.options("*", cors());
 
 
