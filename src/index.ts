@@ -1,7 +1,7 @@
 import express from "express";
 import {connectDB} from "./config/db";
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
+import cors from "cors";
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
 import dotenv from 'dotenv';
@@ -12,9 +12,8 @@ const app = express();
 app.use(express.json())
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173",
-  // origin: "https://happy-shop-client.vercel.app",
-  credentials: true,  // ✅ Allows cookies
+  origin: ["http://localhost:5173", "https://happy-shop-client.vercel.app"],
+  credentials: true
 }));
 
 
