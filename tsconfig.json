@@ -1,18 +1,18 @@
+    /* Visit https://aka.ms/tsconfig to read more about this file */
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "moduleResolution": "node",
+    /* Language and Environment */
+    "target": "es2016",    
+
+    /* Modules */
     "module": "CommonJS",
-    "target": "ES6",
+    "rootDir": ".",
+    "outDir": "./dist",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["src/*"]
-    }
-  },
-  "include": ["index.ts", "src/**/*.ts"]
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "skipLibCheck": true
+  }
 }
