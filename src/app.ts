@@ -19,6 +19,10 @@ app.use(cors({
   credentials: true,
 }));
 
+app.get("/ping", (req, res) => {
+  res.send("pong");
+})
+
 // Routes
 import productRouter from "./routes/products";
 import customerRouter from "./routes/customers";
