@@ -1,5 +1,5 @@
 import express from "express";
-import {connectDB} from "./config/db";
+import {connectDB} from "./src/config/db";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { VercelRequest, VercelResponse } from "@vercel/node";
@@ -19,12 +19,12 @@ app.use(cors({
 
 
 // Routes
-import productRouter from "./routes/products";
-import customerRouter from "./routes/customers";
-import orderRouter from "./routes/orders";
-import orderItemRouter from "./routes/orderItems";
-import stripeRouter from "./routes/stripe";
-import authRouter from "./routes/auth";
+import productRouter from "./src/routes/products";
+import customerRouter from "./src/routes/customers";
+import orderRouter from "./src/routes/orders";
+import orderItemRouter from "./src/routes/orderItems";
+import stripeRouter from "./src/routes/stripe";
+import authRouter from "./src/routes/auth";
 app.use('/products', productRouter)
 app.use('/customers', customerRouter)
 app.use('/orders', orderRouter)
