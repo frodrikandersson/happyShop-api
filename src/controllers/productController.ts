@@ -6,11 +6,24 @@ import { ResultSetHeader } from "mysql2";
 
 export const getProducts = async (_: any, res: Response) => { 
   try {
-    const sql = "SELECT * FROM products"
-    const [rows] = await db.query<IProduct[]>(sql)
-    res.json(rows);
+    const sql = `
+      SELECT p.id, p.name, p.description, p.price, p.stock, p.category, p.image, 
+             COALESCE(SUM(oi.quantity), 0) AS total_ordered
+      FROM products p
+      LEFT JOIN order_items oi ON p.id = oi.product_id
+      GROUP BY p.id
+    `;
+    
+    const [rows] = await db.query<IProduct[]>(sql);
+
+    const adjustedProducts = rows.map((product) => ({
+      ...product,
+      adjustedStock: Math.max(0, product.stock - product.total_ordered), 
+    }));
+
+    res.json(adjustedProducts); 
   } catch (error) {
-    res.status(500).json({error: logError(error)})
+    res.status(500).json({ error: logError(error) });
   }
 }
 
@@ -18,14 +31,29 @@ export const getProductById = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   
   try {
-    const sql = "SELECT * FROM products WHERE id = ?";
-    const [rows] = await db.query<IProduct[]>(sql, [id])
+    const sql = `
+      SELECT p.id, p.name, p.description, p.price, p.stock, p.category, p.image, 
+             COALESCE(SUM(oi.quantity), 0) AS total_ordered
+      FROM products p
+      LEFT JOIN order_items oi ON p.id = oi.product_id
+      WHERE p.id = ?
+      GROUP BY p.id
+    `;
+    
+    const [rows] = await db.query<IProduct[]>(sql, [id]);
 
-    rows && rows.length > 0
-      ? res.json(rows[0])
-      : res.status(404).json({message: 'Product not found'})
+    if (rows && rows.length > 0) {
+      const product = rows[0];
+      const adjustedStock = Math.max(0, product.stock - product.total_ordered); 
+      res.json({
+        ...product,
+        adjustedStock
+      });
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
   } catch (error) {
-    res.status(500).json({error: logError(error)})
+    res.status(500).json({ error: logError(error) });
   }
 }
 
