@@ -1,5 +1,4 @@
 import express from "express";
-import { connectDB } from "./src/config/db";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import productRouter from "./src/routes/products";
@@ -19,11 +18,11 @@ app.use(cors({
 }));
 
 // Routes
-app.use("/products", productRouter);
-app.use("/customers", customerRouter);
-app.use("/orders", orderRouter);
-app.use("/order-items", orderItemRouter);
-app.use("/stripe", stripeRouter);
-app.use("/auth", authRouter);
+app.use("/api/products", productRouter);
+app.use("/api/customers", customerRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/order-items", orderItemRouter);
+app.use("/api/stripe", stripeRouter);
+app.use("/api/auth", authRouter);
 
 export default app;
