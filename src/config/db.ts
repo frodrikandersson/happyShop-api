@@ -16,7 +16,6 @@ export const connectDB = async () => {
       database: process.env.DB_NAME,
       port: parseInt(process.env.DB_PORT || "3306"),
     });
-
     return connection;
   } else {
     // In a local environment, use a connection pool to reuse connections
@@ -39,13 +38,19 @@ export const connectDB = async () => {
 // Optional: Add a function to query the pool directly in local development
 export const queryDB = async (query: string, params: any[] = []) => {
   const connection = await connectDB();
-  
+
   if (process.env.VERCEL) {
     // In serverless (Vercel), use the single connection directly
+    if (!connection) {
+      throw new Error("Database connection is not established.");
+    }
     const [rows] = await connection.execute(query, params);
     return rows;
   } else {
     // In local environment, use the pool to query directly
+    if (!connection) {
+      throw new Error("Database pool is not initialized.");
+    }
     const [rows] = await connection.query(query, params);
     return rows;
   }
